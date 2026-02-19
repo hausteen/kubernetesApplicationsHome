@@ -1,0 +1,6 @@
+- op: add
+  path: /metadata/annotations/lbipam.cilium.io~1ips
+  value: "192.168.30.20"
+- op: add
+  path: /spec/type
+  value: LoadBalancer

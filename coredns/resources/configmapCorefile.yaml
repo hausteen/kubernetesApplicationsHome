@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: coredns-corefile
+  annotations:
+    argocd.argoproj.io/sync-wave: "10"
+data:
+  Corefile: |
+    hunt.internal {
+      cache 30
+      errors
+      file /zones/db.hunt.internal
+      auto {
+        directory /zones db\.(.*) {1}
+        reload 30s
+      }
+      health # only set 1 time for all the zones. its a global setting.
+      loadbalance
+      log
+      loop
+      ready
+      reload
+    }
+    . {
+      cache 30
+      errors
+      forward . 1.1.1.1
+      loadbalance
+      log
+      loop
+      ready
+      reload
+    }
